@@ -4,6 +4,8 @@ A simple comparison of performance optimizations for gLUA
 These are a few benchmarks that are tested on a Garry's Mod Server idling with DarkRP with only 1 player online.
 Some of those benchmarks, if possible, were also tested in a LUA5.3 console on Debian 10. If not otherwise stated differently all tests have been done on a gmod server on linux.  
 
+The benchmarks mean nothing compared to other benchmark numbers. These results should only be compared to themselves.
+
 **The goal of this collection of benchmarks is to show the actual performance gain by implementing "Coding Tips" from the web.**
 
 **These are not made up comparisons, everyone can test the code for themselves and see the difference.**
@@ -13,6 +15,30 @@ The sources for some of the "Coding Tips" are:
 [lua-users.org](http://lua-users.org/wiki/OptimisationCodingTips)
 [lua.org](https://www.lua.org/gems/sample.pdf)
 [stackoverflow.com](https://stackoverflow.com/questions/154672/what-can-i-do-to-increase-the-performance-of-a-lua-program/12865406#12865406)
+
+
+# Foreword
+
+Garry's Mod doesn't use lua. It uses lua-jit.  
+This means the following benchmarks mainly show a comparison of tips online and their differences between lua and lua-jit.
+
+An example of lua vs lua-jit with the "multiplication vs division" example:
+
+    $ time luajit-2.1.0-beta3 mult_vs_div.lua
+    Multiplication: 0.00111624
+    Division: 0.00110691
+
+    real    0m1.255s
+    user    0m1.054s
+    sys     0m0.182s
+
+    $ time lua5.3 mult_vs_div.lua
+    Multiplication: 0.0284177
+    Division: 0.03088507
+
+    real    0m21.773s
+    user    0m21.623s
+    sys     0m0.120s
 
 
 
