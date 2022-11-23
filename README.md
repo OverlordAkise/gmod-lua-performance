@@ -86,7 +86,7 @@ The Code: [files/table.insert_vs_table.lua](files/table.insert_vs_table.lua)
 
 # table.HasValue(table,x) vs table[x]
 
-TL;DR: Directly checking the table key with table[value] is faster.
+TL;DR: Directly checking the table key with table[value] is way faster.
 
 The result (1million lookups):
 
@@ -96,6 +96,10 @@ The result (1million lookups):
 
 The Code: [files/table.hasvalue_vs_table.lua](files/table.hasvalue_vs_table.lua)
 
+Note:
+This is a O(n) vs O(1) situation. This means the bigger the table the slower table.HasValue will get.  
+For other examples visit [https://wiki.facepunch.com/gmod/table.HasValue](https://wiki.facepunch.com/gmod/table.HasValue)  
+To learn more about the "Big O Notation" visit, for example, [https://web.mit.edu/16.070/www/lecture/big_o.pdf](https://web.mit.edu/16.070/www/lecture/big_o.pdf)
 
 
 # String Concat vs Table Concat
