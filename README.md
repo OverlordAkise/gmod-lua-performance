@@ -152,16 +152,20 @@ The Code: [files/local_vs_global.lua](files/local_vs_global.lua)
 
 # x^2 vs x*x
 
-TL;DR: Both are nearly the same in Garry's Mod. x*x is way faster in LUA5.3.
+This was tested with the inbuilt math.pow function and also the default power-of operator.
+
+TL;DR: Using the "roof" operator is slightly faster in gmod. The speed is the same in Lua5.4.
 
 The result (average of 100 rounds with 10000 calculations each):
 
     GMOD SERVERSIDE CONSOLE
-    x^x:    0.000076017000008051 (7.6017000008051e-05)
-    x*x:    0.000071278999989772 (7.1278999989772e-05)
-    LUA5.3 CONSOLE
-    x^x:    0.00883908
-    x*x:    0.0029428
+    x^2 math.pow:  4.0210000111074e-06
+    x*x:           3.7120000251889e-06
+    x^2 ^:         3.5500000080901e-06
+    LUA5.4 CONSOLE
+    x^2 math.pow:  0.00015625
+    x^2 ^:         0.00015625
+    x*x:           0.00015625
 
 The Code: [files/x_squared_vs_x_times.lua](files/x_squared_vs_x_times.lua)
 
