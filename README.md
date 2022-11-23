@@ -89,6 +89,21 @@ Code: [files/nwvar_vs_darkrpvar.lua](files/nwvar_vs_darkrpvar.lua)
 
 
 
+# Config Table vs Variable
+
+TL;DR: Using a table is slower than using a variable.
+
+This is a comparison between using a config table like `myaddon.config.color =` and a simple variable like `myaddon_config_color =`. This mainly exists because some people don't believe me.
+
+The result (10000 frametimes of 3 calls each):
+
+    Table: 0.00000668657000042    (6.68657000042e-06)
+    Var:   0.0000043992899999012  (4.3992899999012e-06)
+
+Code: [files/table_vs_variable.lua](files/table_vs_variable.lua)
+
+
+
 # pairs vs ipairs vs for i=1
 
 TL;DR: They are not as different as people make it out to be. Pairs is slower because it also works on non-sequential tables.
