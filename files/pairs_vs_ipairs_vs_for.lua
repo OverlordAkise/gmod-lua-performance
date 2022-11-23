@@ -1,6 +1,6 @@
 local testab = {}
 for i=1,10000 do
-  testab[math.random()] = math.random()
+  testab[i] = math.random()
 end
 
 local a = nil

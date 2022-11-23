@@ -44,13 +44,14 @@ An example of lua vs lua-jit with the "multiplication vs division" example:
 
 # pairs vs ipairs vs for i=1
 
-TL;DR: Doing a for i=1, #table do loop is way faster than a  for k,v in pairs(table) do loop. ipairs is around as fast as for i=1.
+TL;DR: They are not as different as people make it out to be. Pairs is slower because it also works on non-sequential tables.
 
 The result (each method loops 10000 times):
 
-    for i=1:  0.00000019999993128295 (1.9999993128295e-07)
-    ipairs:   0.00000069999998686399 (6.9999998686399e-07)
-    pairs:    0.011984699999971
+    pairs:    0.0095316000000025
+    ipairs:   0.0082050999999979
+    for i=1:  0.0077024000000279
+
 
 Code: [files/pairs_vs_ipairs_vs_for.lua](files/pairs_vs_ipairs_vs_for.lua)
 
