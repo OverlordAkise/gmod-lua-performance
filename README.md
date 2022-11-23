@@ -42,6 +42,38 @@ An example of lua vs lua-jit with the "multiplication vs division" example:
 
 
 
+# caching functions in HUDPaint
+
+TL;DR: If you use a a function, e.g. LocalPlayer(), often in a HUDPaint hook then I highly suggest caching it once at the beginning.
+
+This is a comparison of the following code bits. The question is: "Should you cache a function you only use 3 times?".
+
+The unoptimized version:
+
+```lua
+draw.RoundedBox(0, LocalPlayer():Health(), 500, 500, 500, color_white )
+draw.RoundedBox(0, LocalPlayer():Health(), 200, 200, 200, color_white )
+draw.RoundedBox(0, LocalPlayer():Health(), 10, 10, 10, color_white )
+```
+
+and the better version:
+
+```lua
+local lph = LocalPlayer():Health()
+draw.RoundedBox(0, lph, 500, 500, 500, color_white )
+draw.RoundedBox(0, lph, 200, 200, 200, color_white )
+draw.RoundedBox(0, lph, 10, 10, 10, color_white )
+```
+
+The result (10000 frametimes):
+
+    Non-Local:  0.00001756282000116   (1.756282000116e-05)
+    Local:      0.000006777780000516  (6.777780000516e-06)
+
+Code: [files/hudpaint_3call_cache.lua](files/hudpaint_3call_cache.lua)
+
+
+
 # pairs vs ipairs vs for i=1
 
 TL;DR: They are not as different as people make it out to be. Pairs is slower because it also works on non-sequential tables.
