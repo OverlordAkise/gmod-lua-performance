@@ -74,6 +74,21 @@ Code: [files/hudpaint_3call_cache.lua](files/hudpaint_3call_cache.lua)
 
 
 
+# GetNWString vs getDarkRPVar
+
+TL;DR: They are nearly the same speed, but I would still recommend to use the gmod inbuilt NW library for type safety and gamemode-independent logic.
+
+This is a comparison between `LocalPlayer():GetNWString("job")` and `LocalPlayer():getDarkRPVar("job")`.
+
+The result (10000 frametimes of 3 calls each):
+
+    getDarkRPVar: 2.494706000125e-05
+    GetNWString:  2.3140229998944e-05
+
+Code: [files/nwvar_vs_darkrpvar.lua](files/nwvar_vs_darkrpvar.lua)
+
+
+
 # pairs vs ipairs vs for i=1
 
 TL;DR: They are not as different as people make it out to be. Pairs is slower because it also works on non-sequential tables.
