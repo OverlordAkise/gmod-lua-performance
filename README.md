@@ -291,6 +291,22 @@ The result (1000x in SysTime() time taken):
 The Code: [files/local_color_vs_redefining.lua](files/local_color_vs_redefining.lua)
 
 
+
+# table.Count vs #
+
+TL;DR: It is better to always use the `#` operator instead of table.Count for sequential tables.
+
+    # Table size: 1000
+    Hashtag: 6.2949998141448e-08
+    TbCount: 1.5430600009495e-06
+    # Table size: 10
+    Hashtag: 4.4980000029682e-08
+    TbCount: 9.0410000939301e-08
+
+The Code: [files/table_count_vs_hashtag.lua](files/table_count_vs_hashtag.lua)
+
+
+
 # MySQL vs SQLite
 
 For the full documentation please look at [https://shira.at/gmod/mysql_sqlite.html](https://shira.at/gmod/mysql_sqlite.html).  
