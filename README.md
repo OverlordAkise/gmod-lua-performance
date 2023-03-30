@@ -164,6 +164,7 @@ For other examples visit [https://wiki.facepunch.com/gmod/table.HasValue](https:
 To learn more about the "Big O Notation" visit, for example, [https://web.mit.edu/16.070/www/lecture/big_o.pdf](https://web.mit.edu/16.070/www/lecture/big_o.pdf)
 
 
+
 # String Concat vs Table Concat
 
 TL;DR: It is faster to add strings together via tables instead of stringing them together directly.
@@ -178,6 +179,30 @@ The result (10000 strings):
     Table Concat:   0.006428
 
 The Code: [files/string_vs_table_concat.lua](files/string_vs_table_concat.lua)
+
+
+
+# surface.DrawText vs draw.DrawText
+
+TL;DR: It is very slightly faster to use surface.DrawText instead of draw.DrawText.  
+But: This test is not including draw.SimpleText or draw.SimpleTextOutlined.
+
+    surface.DrawText:   4.2920899998398e-05
+    draw.DrawText:      5.8662150001328e-05
+
+The Code: [files/surface_vs_draw_text.lua](files/surface_vs_draw_text.lua)
+
+
+
+# surface.DrawRect vs draw.RoundedBox
+
+TL;DR: It is very slightly faster to use surface.DrawRect instead of draw.RoundedBox.  
+It should not be important for performance though as draw.RoundedBox also supports round edges and is simpler to read and write.
+
+    surface.DrawRect:   7.4859800010245e-06
+    draw.RoundedBox:    8.335099999681e-06
+
+The Code: [files/surface_vs_draw_box.lua](files/surface_vs_draw_box.lua)
 
 
 
