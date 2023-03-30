@@ -292,7 +292,7 @@ The Code: [files/local_color_vs_redefining.lua](files/local_color_vs_redefining.
 
 
 
-# table.Count vs #
+# table.Count vs \#
 
 TL;DR: It is better to always use the `#` operator instead of table.Count for sequential tables.
 
