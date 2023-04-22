@@ -132,6 +132,21 @@ The Code: [files/distance_vs_disttosqr.lua](files/distance_vs_disttosqr.lua)
 
 
 
+# ternary vs if
+
+TL;DR: They take the same amount of time. The difference is randomly swinging a tiny bit to each side every test.
+
+Tested: `a = t and 7 or 1` vs `a=1 if t then a=7 end`
+
+The result (average of 1000000 calculations):
+
+    if:      4.1537399886693e-08
+    ternary: 4.168440006697e-08
+
+The Code: [files/ternary_vs_if.lua](files/ternary_vs_if.lua)
+
+
+
 # table.insert vs table[#table+1] = 
 
 TL;DR: The time difference between using table.insert(myTable,9) and myTable[#myTable+1] = 9 is barely noticable, as the results were mostly the same. (Even if tested on Lua5.3 console)
