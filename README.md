@@ -180,6 +180,41 @@ To learn more about the "Big O Notation" visit, for example, [https://web.mit.ed
 
 
 
+# table.Empty(tab) vs tab = {}
+
+TL;DR: Assigning an empty table is faster than emptying it.
+
+The result:
+
+    # Tabsize 100000
+    table.Empty	  0.00047110000002704
+    tab = {}      0.000022799999953804  2.2799999953804e-05
+    
+    # Tabsize 10
+    table.Empty   0.0000014999999962129   1.4999999962129e-06
+    tab = {}      0.00000019999998812636  1.9999998812636e-07
+
+
+The Code: [files/table_empty_vs_new.lua](files/table_empty_vs_new.lua)
+
+
+
+# ply:GetValue(3) vs GetValue(ply,3)
+
+This is a comparison of using the MetaTable PLAYER vs simply passing the player as an argument.
+
+TL;DR: Not using metatables is very slightly faster.
+
+The result (100.000 rounds, 100 times):
+
+    meta: 0.014884074999999
+    none: 0.013477668
+
+
+The code: [files/meta_vs_argument.lua](files/meta_vs_argument.lua)
+
+
+
 # String Concat vs Table Concat
 
 TL;DR: It is faster to add strings together via tables instead of stringing them together directly.
