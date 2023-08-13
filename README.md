@@ -2,13 +2,13 @@
 A simple comparison of performance optimizations for gLUA
 
 These are a few benchmarks that are tested on a Garry's Mod Server idling with DarkRP with only 1 player online.
-Some of those benchmarks, if possible, were also tested in a LUA5.3 console on Debian 10. If not otherwise stated differently all tests have been done on a gmod server on linux.  
+Some of those benchmarks, if possible, were also tested in a LUA5.3 console on Debian 10. If not otherwise stated differently all tests have been done on a 32bit gmod server on linux.  
 
-The benchmarks mean nothing compared to other benchmark numbers. These results should only be compared to themselves.
+These benchmark results mean nothing compared to other benchmark results. Your numbers will probably look completely different than my numbers. Please compare your benchmark results only with your own numbers, as every small change in Hardware changes the result notably.
 
 **The goal of this collection of benchmarks is to show the actual performance gain by implementing "Coding Tips" from the web.**
 
-**These are not made up comparisons, everyone can test the code for themselves and see the difference.**
+**Everyone can test the code for themselves and see the difference. Source code is always linked at the bottom of a comparison.**
 
 The sources for some of the "Coding Tips" are:
 
@@ -21,8 +21,9 @@ If you want to read more about gmod lua then you could also visit my wiki at [lu
 
 # Foreword
 
-Garry's Mod doesn't use lua. It uses lua-jit.  
-This means the following benchmarks mainly show a comparison of tips online and their differences between lua and lua-jit.
+Garry's Mod doesn't use only lua. It uses lua-jit.  
+This means the following benchmarks show, where applicable, also a comparison of lua and lua-jit.  
+Many of the performance tips online are supposed to be for lua, not luajit.
 
 An example of lua vs lua-jit with the "multiplication vs division" example:
 
@@ -41,6 +42,9 @@ An example of lua vs lua-jit with the "multiplication vs division" example:
     real    0m21.773s
     user    0m21.623s
     sys     0m0.120s
+
+If you find any error, mistake or completely different result on your side please create a pull request.  
+I want this page to be as accurate as possible so that everyone can see and learn what actually benefits your code's performance.
 
 
 
