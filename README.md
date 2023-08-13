@@ -12,9 +12,11 @@ The benchmarks mean nothing compared to other benchmark numbers. These results s
 
 The sources for some of the "Coding Tips" are:
 
-[lua-users.org](http://lua-users.org/wiki/OptimisationCodingTips)
-[lua.org](https://www.lua.org/gems/sample.pdf)
-[stackoverflow.com](https://stackoverflow.com/questions/154672/what-can-i-do-to-increase-the-performance-of-a-lua-program/12865406#12865406)
+[lua-users.org](http://lua-users.org/wiki/OptimisationCodingTips)  
+[lua.org](https://www.lua.org/gems/sample.pdf)  
+[stackoverflow.com](https://stackoverflow.com/questions/154672/what-can-i-do-to-increase-the-performance-of-a-lua-program/12865406#12865406)  
+
+If you want to read more about gmod lua then you could also visit my wiki at [luctus.at/wiki](https://luctus.at/wiki/)
 
 
 # Foreword
