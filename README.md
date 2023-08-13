@@ -376,6 +376,24 @@ The Code: [files/table_count_vs_hashtag.lua](files/table_count_vs_hashtag.lua)
 
 
 
+# ply.x vs tab[ply][x]
+
+TL;DR: It is faster to get variables from a table than from the ply object. Setting a variable has nearly the same speed though, only getting the variable is slower on ply.
+
+I and many others use code like `ply.lastSpawned = CurTime()`. This is quite easy to use and understand, but in performance aspects it is slower than using a table. An example with a table would be `tab[ply]["lastSpawned"] = CurTime()`.  
+This is because reading this variable from a player uses a (slower) __index method. If you ever used FProfiler then you would probably have seen this "metamethod __index player" function near the top of "most runtime in ms".
+
+I tested this by setting and getting random numbers with both methods 10.000 times, and I ran this 1000 times and calculated the average time taken. Result:
+
+    ply:	0.0033284901999953
+    tab:	0.0016247142000013
+
+As you can see, it is quite faster (by 2x) with a table.  
+Using a table also has its downsides, like having to clean it up regularly to avoid ram leaks and having to check 2 table indexes each time you want to verify it.  
+Source code: [files/ply_vs_table_index.lua](files/ply_vs_table_index.lua)
+
+
+
 # MySQL vs SQLite
 
 For the full documentation please look at [https://shira.at/gmod/mysql_sqlite.html](https://shira.at/gmod/mysql_sqlite.html).  
