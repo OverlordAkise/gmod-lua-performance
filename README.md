@@ -342,6 +342,23 @@ The Code: [files/local_color_vs_redefining.lua](files/local_color_vs_redefining.
 
 
 
+# Global variables slow down
+
+TL;DR: Creating a lot of global variables neither slows down the game nor creates any noticable impact on performance.
+
+I heard from multiple sources that "creating many global variables is bad".  
+I tested this by creating 10.000 global variables and observing the game afterwards. An example with the runtime of 10.000 math function calls:
+
+    Time    _G-count    time taken
+    Before	3133        0.00044090000005781
+    After	13144       0.00043160000018361
+
+The FProfiler statistics and general gameplay feel didn't change either.  
+For more details on the test (or if you want to verify it yourself) check out my script I used:  
+[files/global_variables.lua](files/global_variables.lua)
+
+
+
 # table.Count vs \#
 
 TL;DR: It is better to always use the `#` operator instead of table.Count for sequential tables.
