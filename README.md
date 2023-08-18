@@ -259,15 +259,16 @@ The Code: [files/table_empty_vs_new.lua](files/table_empty_vs_new.lua)
 
 # ply:GetValue(3) vs GetValue(ply,3)
 
-This is a comparison of using the MetaTable PLAYER vs simply passing the player as an argument.
+TL;DR: Not using metatables is very very slightly faster.
 
-TL;DR: Not using metatables is very slightly faster.
+This is a comparison of using the MetaTable PLAYER vs simply passing the player as an argument.
 
 The result (100.000 rounds, 100 times):
 
-    meta: 0.014884074999999
-    none: 0.013477668
+    ply:GetCash(1): 0.014884074999999
+    GetCash(ply,1): 0.013477668
 
+As you can see, there is barely any speed difference between the two. Without a metamethod it is only slightly faster in every test, but not noticable enough to be a recommendation.
 
 The code: [files/meta_vs_argument.lua](files/meta_vs_argument.lua)
 
