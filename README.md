@@ -82,14 +82,24 @@ Code: [files/hudpaint_3call_cache.lua](files/hudpaint_3call_cache.lua)
 
 # GetNWString vs getDarkRPVar
 
-TL;DR: They are nearly the same speed, but I would still recommend to use the gmod inbuilt NW library for type safety and gamemode-independent logic.
+TL;DR: getDarkRPVar is always faster on server while on client it seems to be random. I would recommend using getDarkRPVar, as it is more optimized for network usage in comparison to NW1's constant network traffic every 10 seconds.
 
-This is a comparison between `LocalPlayer():GetNWString("job")` and `LocalPlayer():getDarkRPVar("job")`.
+This is a comparison between `ply:GetNWString("job")` and `ply:getDarkRPVar("job")`.
 
-The result (10000 frametimes of 3 calls each):
+Result:
 
-    getDarkRPVar: 2.494706000125e-05
-    GetNWString:  2.3140229998944e-05
+    --- Benchmark complete
+    reps	10	rounds	10000
+    On Server
+    darkrpvar	1.2346400001078e-07
+    gmodnwvar	2.0404500001689e-07
+    --- Benchmark complete
+    reps	10	rounds	10000
+    On Client
+    darkrpvar	2.4343500003823e-07
+    gmodnwvar	2.036369999766e-07
+
+As you can see, the result is different on client and server. The result on the client is always different everytime i run these tests. Sometimes, on the client , the gmodnwvar is faster by 25% and other times it is 300% slower than darkrpvar.
 
 Code: [files/nwvar_vs_darkrpvar.lua](files/nwvar_vs_darkrpvar.lua)
 

@@ -1,8 +1,18 @@
+--Requires luctus_benchmark.lua to be loaded
+--10 times, with a 0.2s delay inbetween, run the following functions 10.000 times each
+
+LuctusCompareOften(10,0.2,10000,{
+    {"darkrpvar",function() local a = Entity(1):getDarkRPVar("job") end},
+    {"gmodnwvar",function() local a = Entity(1):GetNWString("job") end},
+})
+
+--Older code, without lib:
+
 --[[
-Tests: nw=10000 / rp=10000
-NW: 2.3140229998944e-05
-RP: 2.494706000125e-05
---]]
+--Tests: nw=10000 / rp=10000
+--NW: 2.3140229998944e-05
+--RP: 2.494706000125e-05
+
 
 --First type "nw" and wait for the squares to vanish, then type "rp" and wait again - after they vanish too type "result"
 --Im lazy and this is an easy test setup (same as hudpaint_3call_cache.lua)
@@ -57,3 +67,4 @@ function triggerNWTest()
     if i == 10000 then hook.Remove("HUDPaint", "luctus_fps_test_nw") end
   end)
 end
+--]]
