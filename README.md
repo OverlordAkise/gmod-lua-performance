@@ -456,12 +456,20 @@ For more details on the test (or if you want to verify it yourself) check out my
 
 TL;DR: It is better to always use the `#` operator instead of table.Count for sequential tables.
 
+This comparison only works on sequential (or numerical) tables. These are tables that have a numerical, rising number as a key, in other languages you would call this "list" or array.
+
+Table.count would always be used if you want to count a string-index table (also called dictionary or map), but in cases like this both can be used.
+
+Result:
+
     # Table size: 1000
     Hashtag: 6.2949998141448e-08
     TbCount: 1.5430600009495e-06
     # Table size: 10
     Hashtag: 4.4980000029682e-08
     TbCount: 9.0410000939301e-08
+
+As you can see above, the table.Count method is getting slower the larger the table becomes. This is because it loops through all the elements in the table and counts them, according to an old edit from the gmod wiki.
 
 The Code: [files/table_count_vs_hashtag.lua](files/table_count_vs_hashtag.lua)
 
