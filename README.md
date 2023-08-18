@@ -320,17 +320,18 @@ The Code: [files/string_format_vs_concat.lua](files/string_format_vs_concat.lua)
 
 # surface.DrawText vs draw.DrawText
 
-TL;DR: Using draw.SimpleText is the fastest way to draw text on screen in comparison to surface functions, DrawText and SimpleTextOutlined.
+TL;DR: Using `draw.SimpleText` is nearly as fast as using the `surface.*` functions. DrawText is a bit slower and SimpleTextOutlined is by far the slowest.
 
 This test simply draws a word on 3 different coordinates on your screen with 4 different functions and measures the time taken.  
 Result:
 
-    surface funcs	            3.6700000237033e-05
-    draw.drawtext	            2.4000000394153e-05
-    draw.simpletext             1.3100000160193e-05
-    draw.simpletextoutlined	    8.5599999692931e-05
+    surface 	4.4340000022203e-05
+    simple  	4.8489999971935e-05
+    drawtext	5.563999984588e-05
+    outlined	0.00012634444445009
 
-As you can see above the `draw.SimpleText` method is the fastest. It is (maybe) faster than `draw.DrawText` because it doesn't "handle newlines properly" according to the gmod wiki. SimpleTextOutlined is slower because it has to draw an outline extra in comparison to the 3 other functions.
+
+As you can see above the `surface.*` method is the fastest closely followed by draw.SimpleText. It is (maybe) faster than `draw.DrawText` because it doesn't "handle newlines properly" according to the gmod wiki. SimpleTextOutlined is the slowest because it has to draw an extra outline in comparison to the 3 other functions.
 
 The Code: [files/surface_vs_draw_text.lua](files/surface_vs_draw_text.lua)
 
