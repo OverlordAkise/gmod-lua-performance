@@ -291,6 +291,33 @@ The Code: [files/string_vs_table_concat.lua](files/string_vs_table_concat.lua)
 
 
 
+# string.format vs .. concat
+
+TL;DR: Adding only strings together makes `..` faster, but as soon as numbers or other things come into play the `string.format` method is faster.
+
+This is a comparison of the 2 ways of creating a single string out of multiple pieces, either with string.format or with `..` between the arguments. Example:
+
+```lua
+format = string.format("%s has steamid %s",ply:Nick(),ply:SteamID())
+concat = ply:Nick().." has steamid "..ply:SteamID()
+```
+
+Result:
+
+    --- Benchmark complete
+    reps	10	rounds	1000
+    On Server
+    concat str	1.7449199980092e-06
+    format str	2.0344400029444e-06
+    concat int	2.7943200012942e-06
+    format int	2.5907900007041e-06
+
+As you can see above, the format method is slower if you only add together strings, but if you add together strings and numbers it is faster again.
+
+The Code: [files/string_format_vs_concat.lua](files/string_format_vs_concat.lua)
+
+
+
 # surface.DrawText vs draw.DrawText
 
 TL;DR: It is very slightly faster to use surface.DrawText instead of draw.DrawText.  
