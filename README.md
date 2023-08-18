@@ -111,10 +111,43 @@ TL;DR: Using a table is slower than using a variable.
 
 This is a comparison between using a config table like `myaddon.config.color =` and a simple variable like `myaddon_config_color =`. This mainly exists because some people don't believe me.
 
-The result (10000 frametimes of 3 calls each):
+The result:
 
-    Table: 0.00000668657000042    (6.68657000042e-06)
-    Var:   0.0000043992899999012  (4.3992899999012e-06)
+    --SERVER
+    tab=	1.9999993128295e-07
+    var=	1.0000007932831e-07
+    --CLIENT
+    tab=	1.0000007932831e-07
+    var=	0
+
+As you can see above, using a single variable instead of a table structure is faster.
+
+
+## Explanation
+
+Getting a variable is as simple as "getting" it. But with a table you have to get the table and then the table element inside.  
+You can inspect this with lua's luac command, e.g. `luac5.4 -l file.lua`.  
+An example: `print(abc)` vs `print(a.b.c)`
+
+```
+$ luac5.4 -l var.lua
+[...]
+        GETTABUP        0 0 2   ; _ENV "print"
+        GETTABUP        1 0 0   ; _ENV "abc"
+        CALL            0 2 1   ; 1 in 0 out
+        RETURN          0 1 1   ; 0 out
+
+$ luac5.4 -l tab.lua
+[...]
+        GETTABUP        0 0 4   ; _ENV "print"
+        GETTABUP        1 0 0   ; _ENV "a"
+        GETFIELD        1 1 1   ; "b"
+        GETFIELD        1 1 2   ; "c"
+        CALL            0 2 1   ; 1 in 0 out
+        RETURN          0 1 1   ; 0 out
+```
+
+As you can observe above, the table variant simply has more executions and is thus slower in theory and practice as shown above.
 
 Code: [files/table_vs_variable.lua](files/table_vs_variable.lua)
 

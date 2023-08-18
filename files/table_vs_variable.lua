@@ -1,8 +1,28 @@
+
+gglc = {}
+gglc.c = {}
+gglc.c.col = 342
+gglcccol = 342
+
+local a = nil
+local st = SysTime()
+a = gglc.c.col
+local et = SysTime()
+print("tab:",et-st)
+
+local a = nil
+local st = SysTime()
+a = gglcccol
+local et = SysTime()
+print("var:",et-st)
+
+--Older code:
+
 --[[
-Tests: var=10000 / tab=10000
-var: 4.3992899999012e-06
-tab: 6.68657000042e-06
---]]
+--Tests: var=10000 / tab=10000
+--var: 4.3992899999012e-06
+--tab: 6.68657000042e-06
+
 
 hook.Add("OnPlayerChat","luctus_fps_test",function(ply,text,team,dead)
   if text == "test" then
