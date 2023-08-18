@@ -349,6 +349,35 @@ The Code: [files/surface_vs_draw_box.lua](files/surface_vs_draw_box.lua)
 
 
 
+# print vs Msg
+
+TL;DR: MsgN and Msg are faster than `print`. Msg is only a bit faster than MsgN, because it doesn't append a newline at the end.
+
+The test simply prints messages by using Msg, MsgN and print and checks the time taken.
+
+Result:
+
+    --- Benchmark complete
+    reps	90	rounds	10
+    On Server
+    Msg	            1.9603333061645e-06
+    print	        3.1246666549123e-06
+    MsgN	        2.0377778006756e-06
+    
+    Msg vars	    2.9552222390016e-06
+    MsgN vars	    2.9710000045371e-06
+    print vars	    9.2549999974128e-06
+    
+    MsgN vars+tab	3.3575555587757e-06
+
+The test is split into 2 sections: The first one where we only print a single string and the second one where we print varargs of 2 strings and 1 number.  
+As you can see, print is always the slowest.  
+The last benchmark is using MsgN with tabs to immitate what the print function does, and it is still faster than using print directly.
+
+The Code: [files/print_vs_msgn.lua](files/print_vs_msgn.lua)
+
+
+
 # Multiplication vs Division
 
 TL;DR: In Garry's Mod it is not faster to calculate x * 0.5 than x / 2.
