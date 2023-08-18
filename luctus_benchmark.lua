@@ -28,6 +28,21 @@ function ranInt(maxInt)
     return math.random(1,maxInt)
 end
 
+local intToKeep = 0
+local getsRemaining = 0
+function sameInt(keepFor)
+    if keepFor then
+        getsRemaining = keepFor
+        intToKeep = ranInt()
+        return intToKeep
+    end
+    if getsRemaining > 0 then
+        getsRemaining = getsRemaining -1
+        return intToKeep
+    end
+    error("How did we get here")
+end
+
 function ranFloat()
     return math.random()
 end
@@ -54,7 +69,9 @@ function LuctusCompareOften(repeats,delay,rounds,tableOfFuncs)
             print("reps",repeats,"rounds",rounds)
             print(SERVER and "On Server" or "On Client")
             for i=1,#results do
-                print(tableOfFuncs[i][1],calcSum(results[i])/#results[i])
+                local name = tableOfFuncs[i][1]
+                if name == "" then continue end
+                print(name,calcSum(results[i])/#results[i])
             end
         end
     end)
