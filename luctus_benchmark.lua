@@ -20,7 +20,8 @@ local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 function ranStr(length)
     if not length then length = 8 end
     if length == 0 then return "" end
-    return ranStr(length - 1) .. chars:sub(math.random(1, #chars), 1)
+    local pos = math.random(1, #chars)
+    return ranStr(length - 1) .. chars:sub(pos, pos)
 end
 
 function ranInt(maxInt)
