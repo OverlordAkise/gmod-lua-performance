@@ -157,11 +157,11 @@ Code: [files/table_vs_variable.lua](files/table_vs_variable.lua)
 
 TL;DR: They are not as different as people make it out to be. Pairs is slower because it also works on non-sequential tables.
 
-The result (each method loops 10000 times):
+The result (10 tests of 100 runs each with calculating the sum of a 10.000 number table):
 
-    pairs:    0.0095316000000025
-    ipairs:   0.0082050999999979
-    for i=1:  0.0077024000000279
+    pairs 	8.8780000373845e-07
+    ipairs	2.4300000836774e-07
+    for #t	1.639000013256e-07
 
 
 Code: [files/pairs_vs_ipairs_vs_for.lua](files/pairs_vs_ipairs_vs_for.lua)
