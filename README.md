@@ -293,7 +293,8 @@ The Code: [files/string_vs_table_concat.lua](files/string_vs_table_concat.lua)
 
 # string.format vs .. concat
 
-TL;DR: Adding only strings together makes `..` faster, but as soon as numbers or other things come into play the `string.format` method is faster.
+TL;DR: They both have nearly the same speed of execution. It varies between who is faster every run, it's that close.  
+What is better depends on the use case, I recommend using `string.format` for cases where the input is not fixed, because with this function you can add entities/players without having to convert them to a string explicitly.
 
 This is a comparison of the 2 ways of creating a single string out of multiple pieces, either with string.format or with `..` between the arguments. Example:
 
@@ -307,12 +308,12 @@ Result:
     --- Benchmark complete
     reps	10	rounds	1000
     On Server
-    concat str	1.7449199980092e-06
-    format str	2.0344400029444e-06
-    concat int	2.7943200012942e-06
-    format int	2.5907900007041e-06
+    concat str	8.088840000346e-06
+    format str	8.3178000002022e-06
+    concat int	8.2556100002705e-06
+    format int	7.6555600000233e-06
 
-As you can see above, the format method is slower if you only add together strings, but if you add together strings and numbers it is faster again.
+As you can see above, the speed is varying a lot and here the format function is tied with the string concat.
 
 The Code: [files/string_format_vs_concat.lua](files/string_format_vs_concat.lua)
 
