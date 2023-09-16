@@ -231,7 +231,7 @@ To learn more about the "Big O Notation" visit, for example, [https://web.mit.ed
 
 # table.Empty(tab) vs tab = {}
 
-TL;DR: Assigning an empty table is overall faster than emptying it, except if you have really small tables (~10 elements).
+TL;DR: Assigning an empty table is overall faster than emptying it.
 
 The following test compares small (10 elements) and big (10.000) tables with each method. It also differentiates between numerical tables (key 1,2,3,...) and string index tables (key a,b,c,...).  
 Result:
@@ -249,7 +249,7 @@ Result:
     table = {} stringind on big  	4.8149999975067e-07
 
 
-The above times vary greatly by table count and amount of tests included. In general, assigning a new table is faster than emptying one. The biggest difference is between emptying a big numerical table and assigning a new one.  
+The above times vary greatly by table count and amount of tests included. In general, assigning a new table is faster than emptying one, the only exception being small string-indexed tables. The biggest difference is between emptying a big numerical table and assigning a new one.  
 An advantage of always assigning a new table: The time taken is nearly constant, so you don't have to worry about it.
 
 
