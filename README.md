@@ -257,18 +257,19 @@ The Code: [files/table_empty_vs_new.lua](files/table_empty_vs_new.lua)
 
 
 
-# ply:GetValue(3) vs GetValue(ply,3)
+# ply:IsDoing() vs IsDoing(ply)
 
-TL;DR: Not using metatables is very very slightly faster.
+TL;DR: Not using metatables is faster.
 
 This is a comparison of using the MetaTable PLAYER vs simply passing the player as an argument.
 
 The result (100.000 rounds, 100 times):
 
-    ply:GetCash(1): 0.014884074999999
-    GetCash(ply,1): 0.013477668
+    ply:IsVal()	2.5642945799856e-06
+    IsVal(ply) 	1.4792759700133e-06
 
-As you can see, there is barely any speed difference between the two. Without a metamethod it is only slightly faster in every test, but not noticable enough to be a recommendation.
+
+As you can see above, not using the metatable is faster. This is because with `ply:Func()` you have to check if the function exists (which is calling the __index method of the PLAYER metatable) which is slow, while in comparison with `Func(ply)` you already have the function at hand.
 
 The code: [files/meta_vs_argument.lua](files/meta_vs_argument.lua)
 
