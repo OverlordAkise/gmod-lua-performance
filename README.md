@@ -168,6 +168,24 @@ Code: [files/pairs_vs_ipairs_vs_for.lua](files/pairs_vs_ipairs_vs_for.lua)
 
 
 
+# looping through string vs number tables
+
+TL;DR: Numbered and Sequential tables are always faster thanks to ipairs and for loops being able to speed up the loop. There is no difference between the string index length in terms of speed. Sequentially-numbered tables are faster than non-sequential number tables.
+
+With a 100 element table and 1000 runs for each of the 5 testruns:
+
+    short string pairs	1.016059995527e-06
+    big   string pairs	9.8490000327729e-07
+    sequent  int pairs	8.060999940426e-07
+    sequent int ipairs	2.9101999789418e-07
+    unsorted int pairs	1.0006600032284e-06
+
+There is barely any difference between long and short string tables. The main difference in terms of speed comes with sequential number index tables, which can utilize `ipairs` to be faster than using `pairs`.
+
+Code: [files/string_vs_number_table.lua](files/string_vs_number_table.lua)
+
+
+
 # Distance vs DistToSqr
 
 TL;DR: The time difference between Distance and DistToSqr is barely noticable.
