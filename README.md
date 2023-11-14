@@ -357,6 +357,154 @@ The Code: [files/surface_vs_draw_text.lua](files/surface_vs_draw_text.lua)
 
 
 
+# file.Read vs sql.Query
+
+TL;DR: Using file.Read is a tiny bit faster but there is barely any difference between the 2 methods.
+
+If you want to save text and get it later, which method is faster: Saving it to a file and reading it or saving it into sqlite and reading it?  
+Result:
+
+    --- Benchmark complete
+    reps	20	rounds	100
+    On Server
+    file	0.00013605510000012
+    sql 	0.00014516330000007
+
+
+There is no real speed difference, so it is not recommended to pick your storage type based on speed. You should pick your storage type based on what you need and how often you want to change data.
+
+The Code: [files/file_vs_sql_text.lua](files/file_vs_sql_text.lua)
+
+
+
+# sql Query vs QueryRow vs QueryValue
+
+TL;DR: They are not comparable as Query is a C function and the others LUA functions using it.
+
+If you print the "short source" of these 3 functions with `debug.getinfo` you get:
+
+    Query	    [C]
+    QueryRow	lua/includes/util/sql.lua
+    QueryValue	lua/includes/util/sql.lua
+
+The (shortened) source of QueryRow is:
+
+    function sql.QueryRow(query,row)
+        row = row or 1
+        local r = sql.Query(query)
+        if r then return r[row] end
+        return r
+    end
+
+This means that it doesn't really matter (for speed) if you use Query and select the first row or use QueryRow directly.
+
+
+
+# Finding Entities near a player
+
+TL;DR: `ents.FindInBox` and `ents.FindInCone` are the fastest ways to find entities close to a player because they are easy to calculate and do not return too many entities.
+
+The tested methods of getting entities around a player are:
+
+ - ents.FindInPVS
+ - ents.FindInCone
+ - ents.FindInSphere
+ - ents.FindInBox
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	10000
+    inPVS	2.2498948000473e-05
+    inBox	1.9315759995857e-06
+    Sphere	3.8246590005724e-06
+    Cone	1.6260100000977e-06
+
+The Code: [files/finding_entities.lua](files/finding_entities.lua)
+
+
+
+# Hashes (MD5, SHA1, SHA256)
+
+TL;DR: As expected, the more uniqueness you need the longer it takes to calculate it. This means MD5 is the fastest but has a higher probability of colissions than the slower SHA256.
+
+CRC32 and Base64 are just in there as comparisons. They are not a "good hash algorithm" in the same category as e.g. MD5.  
+Every function tested is defined in C and not in LUA. (According to `debug.getinfo`'s short_src)
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	10000
+    CRC32	4.5670400035306e-07
+    MD5	    2.5526380002202e-06
+    SHA1	3.5287520001384e-06
+    SHA256	7.7691459993503e-06
+    Base64	4.1977299973951e-07
+
+The Code: [files/hashes.lua](files/hashes.lua)
+
+
+
+# Is looking at each other comparison
+
+TL;DR: Using the distance between normalized vectors of players viewing direction is the fastest method.
+
+The question is: How do you calculate "Do these 2 players see each other on their screen right now?" the fastest?  
+This was a problem for a gameplay mechanic which needed to be calculated efficiently to not cause any lag.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	5	rounds	100
+    AngleBetweenVectorsManual     	1.1895999687113e-06
+    AngleBetweenYawOnly           	6.7819999458152e-07
+    WikisLookingAtVecDotFunction	1.0634000118444e-06
+    DistanceBetweenNormVecManual	1.5873999782343e-06
+    DistanceBetweenNormVecAuto	    1.0834000095201e-06
+    DistanceBetweenAimVectors     	8.4879999485565e-07
+
+The fastest way is to use the `ply:GetAimVector()` of both players, negate one of those vectors and check the distance between them.
+
+## Detailed explanation
+
+The default problem that many know is: Do these 2 vectors point in the same direction.  
+This problem is similar to ours: Do these 2 players look at each other.  
+The main difference is: One of the vectors is reversed.
+
+This means we just have to reverse one of the 2 vectors and then we can use the standard mathematical formulas to calculate the "default problem" I mentioned above.  
+The slowdown while calculating this comes from using `math.acos` (arc cos) in the official formula. You need this to calculate the vector from the vector dot product formula.  
+
+An easier way is to simply use the distance between the 2 AimVectors. `GetAimVector` returns a normalized Vector which always has a length of 1. This means the maximum distance between the 2 vectors is `2` (if the vectors look in exactly the opposite direction) and the minimum is `0` (if the vectors look directly at each other). This makes it faster than all the other methods because you skip an angle calculation and just compare the distance directly.
+
+
+The Code: [files/looking_at_each_other.lua](files/looking_at_each_other.lua)
+
+
+
+# for v in plys hook.Run vs hook.Run plys
+
+TL;DR: It is faster to call a hook once with all players looping inside than to loop through players and calling a hook on each one by one.
+
+This is a comparison between:
+
+ - Calling a hook for every player
+ - Calling a hook with a list of every player
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	10000
+    single	9.2695600087609e-07
+    many  	2.602249987649e-07
+
+The Code: [files/hook_many_vs_hook_once.lua](files/hook_many_vs_hook_once.lua)
+
+
+
 # surface.DrawRect vs draw.RoundedBox
 
 TL;DR: It is very slightly faster to use surface.DrawRect instead of draw.RoundedBox.  
