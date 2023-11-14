@@ -505,6 +505,27 @@ The Code: [files/hook_many_vs_hook_once.lua](files/hook_many_vs_hook_once.lua)
 
 
 
+# DarkRP's fn vs normal lua
+
+TL;DR: DarkRP's fn library is (most of the time) slower and more difficult to understand than simple lua code.
+
+This is a comparison between 2 functions that do the same but are written completely different.  
+Please look at the Code to see exactly what the 2 tested codepieces were.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	1000
+    darkrp  7.9022700008863e-06 (0.0000079022700008863)
+    default	8.2877000014605e-07 (0.00000082877000014605)
+
+Not only is DarkRP's fn code more difficult to read but it is up to 10 times slower than a simple chain of functions that do the same.
+
+The Code: [files/darkrp_fn_vs_standard_lua.lua](files/darkrp_fn_vs_standard_lua.lua)
+
+
+
 # surface.DrawRect vs draw.RoundedBox
 
 TL;DR: It is very slightly faster to use surface.DrawRect instead of draw.RoundedBox.  
