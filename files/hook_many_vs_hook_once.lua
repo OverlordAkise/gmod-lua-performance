@@ -1,17 +1,22 @@
 
--- This was tested with 3 bots
-
 --This is a comparison between: 
 -- - Calling a hook for every player
 -- - Calling a hook with a list of every player
 
 --[[
+--3 bots
 --- Benchmark complete
 On Server
 reps	10	rounds	10000
 single	9.2695600087609e-07
 many  	2.602249987649e-07
 
+--40 bots
+--- Benchmark complete
+On Server
+reps	10	rounds	10000
+single	7.6739619999353e-06
+many  	3.9794599913876e-07
 --]]
 
 
