@@ -538,6 +538,60 @@ The Code: [files/surface_vs_draw_box.lua](files/surface_vs_draw_box.lua)
 
 
 
+# surface.SetDrawColor object vs rgb split
+
+TL;DR: It is faster to call SetDrawColor with the rgb colors split up than if you were to use a Color object.  
+
+You can use the SetDrawColor function in 2 ways:
+
+ - surface.SetDrawColor(color_white)
+ - surface.SetDrawColor(255,255,255)
+
+This is a comparison between these 2 methods. "Full" means passing the color object and "Split" means passing 3 numbers (rgb) to the function.
+
+    --- Benchmark complete
+    On Client
+    reps	10	rounds	10000
+    SetColorFull	6.0781200035763e-07
+    SetColorSplit	1.1340800017479e-07
+
+The Code: [files/setdrawcolor_comparison.lua](files/setdrawcolor_comparison.lua)
+
+
+
+# table creation assignments vs index
+
+TL;DR: It is faster to assign all your variables in a table in the opening brackets.
+
+I see 2 different ways of initializing tables in code nowadays.  
+The first simply being
+```lua
+local tab = {}
+tab.name = "Test"
+tab.money = 9
+```
+and the second being
+```lua
+local tab = {
+    name = "Test",
+    money = 9,
+}
+```
+
+This is a comparison of both:
+
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	10000
+    table = { x = y,	4.5506299968565e-07
+    table.x = y      	6.2055800030748e-07
+
+As you can see, it is faster if you create the table with the data already inside.
+
+The Code: [files/table_assignments.lua](files/table_assignments.lua)
+
+
+
 # print vs Msg
 
 TL;DR: MsgN and Msg are faster than `print`. Msg is only a bit faster than MsgN, because it doesn't append a newline at the end.
