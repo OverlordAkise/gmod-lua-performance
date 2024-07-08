@@ -80,6 +80,48 @@ Code: [files/hudpaint_3call_cache.lua](files/hudpaint_3call_cache.lua)
 
 
 
+# Caching LocalPlayer function
+
+TL;DR: It is faster to cache the response of `LocalPlayer()` and overwrite the function to always return this value.
+
+Pretty self explanatory. LocalPlayer() always returns you, the player, but takes more time than if you were to simply cache the player entity and return it everytime.  
+Check the code for more info.
+
+Result:
+
+    --- Benchmark complete
+    On Client
+    reps	20	rounds	50000
+    old LocalPlayer	7.4946100011402e-08
+    fastLocalPlayer	6.2921299662776e-08
+
+The Code: [files/localplayer_cache.lua](files/localplayer_cache.lua)
+
+
+
+# Caching SteamID function
+
+TL;DR: It is faster to cache the response of `ply:SteamID()` and overwrite the function to always return this value for a player from a caching table.
+
+Pretty self explanatory. Same as "Caching LocalPlayer function" above.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	50000
+    SteamID Classic	4.6951399998613e-07
+    SteamID Cached	7.0017300033214e-08
+    --- Benchmark complete
+    On Client
+    reps	20	rounds	50000
+    SteamID Classic	5.2189459993372e-07
+    SteamID Cached	6.247109999822e-08
+
+The Code: [files/steamid_cache.lua](files/steamid_cache.lua)
+
+
+
 # GetNWString vs getDarkRPVar
 
 TL;DR: getDarkRPVar is always faster on server while on client it seems to be random. I would recommend using getDarkRPVar, as it is more optimized for network usage in comparison to NW1's constant network traffic every 10 seconds.
@@ -425,6 +467,29 @@ The Code: [files/finding_entities.lua](files/finding_entities.lua)
 
 
 
+# Finding players near you
+
+TL;DR: It is faster to loop through all players and check their distance to you instead of using `ents.FindInSphere` and filtering for players.
+
+This was tested with 40 players (bots) on a server. By looping through all players and checking the distance between you and them you are faster than by finding and looping through all the entities near you and checking if they are a player.
+
+Result:
+    
+    --- Benchmark complete
+    On Server
+    reps	10	rounds	1000
+    FindInSphere	0.00011627801000012
+    PlyGetAllChk	1.9475780000045e-05
+    --- Benchmark complete
+    On Client
+    reps	10	rounds	1000
+    FindInSphere	8.301507999995e-05
+    PlyGetAllChk	2.4392489999832e-05
+
+The Code: [files/finding_players.lua](files/finding_players.lua)
+
+
+
 # Hashes (MD5, SHA1, SHA256)
 
 TL;DR: As expected, the more uniqueness you need the longer it takes to calculate it. This means MD5 is the fastest but has a higher probability of colissions than the slower SHA256.
@@ -636,6 +701,27 @@ The result (average of 100 rounds with 1000000 calculations each):
     Division:         0.02342666
 
 The Code: [files/multiplication_vs_division.lua](files/multiplication_vs_division.lua)
+
+
+
+# math.Clamp vs math.min and math.max
+
+TL;DR: It is a very tiny bit faster to use math.min in combination with math.max instead of math.Clamp, but the difference is negligible.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	50000
+    clamp  	6.9868600001882e-08
+    max/min	6.806609987666e-08
+    --- Benchmark complete
+    On Client
+    reps	20	rounds	50000
+    clamp  	6.9836399990663e-08
+    max/min	6.7090800087044e-08
+
+The Code: [files/math_clamp.lua](files/math_clamp.lua)
 
 
 
