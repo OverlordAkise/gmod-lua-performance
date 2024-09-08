@@ -99,6 +99,49 @@ The Code: [files/localplayer_cache.lua](files/localplayer_cache.lua)
 
 
 
+# Caching LocalPlayer with "or"
+
+TL;DR: It is a bit faster to "ply = ply or LocalPlayer()" instead of always using LocalPlayer(), but the time save is barely noticable.
+
+Pretty self explanatory. This caches LocalPlayer() on first run and then always reuses this value.  
+Check the code for more info.
+
+Result:
+
+    --- Benchmark complete
+    On Client
+    reps	20	rounds	10000
+    Cached	5.8824900024945e-07
+    Plain 	6.021605001348e-07
+
+The Code: [files/localplayer_cached_or.lua](files/localplayer_cached_or.lua)
+
+
+
+# Angle:Zero() vs new Angle()
+
+TL;DR: It is a faster to reuse the same Angle object and zero it before use than to create a new Angle object everytime.
+
+The wiki states this as fact, and it is true. It saves you the overhead of creating a new object and garbage-collecting the old one.  
+Check the code for more info.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	30	rounds	5000
+    Zero'd	1.3485066712595e-07
+    Create	2.3365133318293e-07
+    --- Benchmark complete
+    On Client
+    reps	30	rounds	5000
+    Zero'd	1.1277866673481e-07
+    Create	2.4979333345679e-07
+
+The Code: [files/angle_zero_vs_new.lua](files/angle_zero_vs_new.lua)
+
+
+
 # Caching SteamID function
 
 TL;DR: It is faster to cache the response of `ply:SteamID()` and overwrite the function to always return this value for a player from a caching table.
