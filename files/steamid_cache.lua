@@ -1,22 +1,21 @@
 --[[
 --- Benchmark complete
+reps	20	rounds	50000
 On Server
-reps	20	rounds	50000
-SteamID Classic	4.6951399998613e-07
-SteamID Cached	7.0017300033214e-08
+SteamID Classic	8.0880670002875e-07
+SteamID Cached	3.1597380007656e-07
 --- Benchmark complete
-On Client
 reps	20	rounds	50000
-SteamID Classic	5.2189459993372e-07
-SteamID Cached	6.247109999822e-08
+On Client
+SteamID Classic	9.4334970010573e-07
+SteamID Cached	3.3031949989709e-07
 --]]
 
 local FPLAYER = FindMetaTable("Player")
-local sids = {}
 local ply = Entity(1)
-sids[ply] = ply:SteamID()
+ply.steamIDCached = ply:SteamID()
 function FPLAYER:SteamIDc()
-    return sids[self]
+    return self.steamIDCached
 end
 
 LuctusCompareOften(20,0.1,50000,{
