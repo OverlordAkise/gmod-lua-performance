@@ -768,6 +768,70 @@ The Code: [files/math_clamp.lua](files/math_clamp.lua)
 
 
 
+# Vector:Dot(Vector) overwrite
+
+TL;DR: It is not faster to overwrite and implement the vector dot calculation in LUA.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	30000
+    vec:Dot old	1.2875416667678e-07
+    vec:Dot new	5.2033999999855e-07
+
+The Code: [files/vector_dot_overwrite.lua](files/vector_dot_overwrite.lua)
+
+
+
+# Vector:Normalize() overwrite
+
+TL;DR: It is not faster to overwrite and implement the vector Normalize calculation in LUA.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	30000
+    vec:Normalize old	1.1955383335495e-07
+    vec:Normalize new	5.1291399999911e-07
+
+The Code: [files/vector_normalize_overwrite.lua](files/vector_normalize_overwrite.lua)
+
+
+
+# Vector:Length() overwrite
+
+TL;DR: It is not faster to overwrite and implement the vector Length calculation in LUA.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	30000
+    vec:Length old	1.1400050000068e-07
+    vec:Length new	3.8188000000545e-07
+
+The Code: [files/vector_length_overwrite.lua](files/vector_length_overwrite.lua)
+
+
+
+# math.Round overwrite
+
+TL;DR: It is a tiny bit faster to overwrite and implement the math.Round calculation in LUA.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	30000
+    math.Round old	7.1794499987448e-08
+    math.Round new	6.0206499994801e-08
+
+The Code: [files/math_round_overwrite.lua](files/math_round_overwrite.lua)
+
+
+
 # Local vs Global variable speed
 
 TL;DR: It is a little itsy-bitsy bit faster to make all variables local in Garry's Mod. (14% in this example)
@@ -782,6 +846,24 @@ The result (average of 100 rounds with 10000 calculations each):
     local math.sin:       0.00049858
 
 The Code: [files/local_vs_global.lua](files/local_vs_global.lua)
+
+
+
+# Caching GetConVar
+
+TL;DR: It is not faster to cache ConVars in LUA.
+
+The wiki page states that the GetConVar function "... caches the result in Lua for quicker lookups.", so caching the result again won't make it that faster.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	1000
+    UnCached	2.0708000000838e-07
+    Cached  	2.1247999993221e-07
+
+The Code: [files/getconvar_cache.lua](files/getconvar_cache.lua)
 
 
 
@@ -873,6 +955,58 @@ Result:
 As you can see above, the table.Count method is getting slower the larger the table becomes. This is because it loops through all the elements in the table and counts them, according to an old edit from the gmod wiki.
 
 The Code: [files/table_count_vs_hashtag.lua](files/table_count_vs_hashtag.lua)
+
+
+
+# table.Random overwrite
+
+TL;DR: It is faster to randomly generate an index of a sequential table and get a random value this way instead of using table.Random().
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	10000
+    small old	4.6385350004698e-07
+    small new	1.2625500000013e-07
+    big old	    3.1202909999735e-06
+    big new	    1.2906200004807e-07
+
+The Code: [files/table_random_overwrite.lua](files/table_random_overwrite.lua)
+
+
+
+# table.Count overwrite
+
+TL;DR: It is not faster to overwrite the table.Count function and count the table yourself in LUA.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	10000
+    count small old	2.7576250000664e-07
+    count small new	2.6563899996773e-07
+    count big old	1.8296299999935e-06
+    count big new	1.8260360000758e-06
+
+The Code: [files/table_count_overwrite.lua](files/table_count_overwrite.lua)
+
+
+
+# file.Write overwrite
+
+TL;DR: It is not faster to overwrite the file.Write function to use lower level lua functions to write files.
+
+Result:
+
+    --- Benchmark complete
+    On Server
+    reps	20	rounds	100
+    write old	0.00076962965000047
+    write new	0.00079238309999975
+
+The Code: [files/file_write_overwrite.lua](files/file_write_overwrite.lua)
 
 
 
