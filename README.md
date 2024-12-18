@@ -253,6 +253,21 @@ Code: [files/pairs_vs_ipairs_vs_for.lua](files/pairs_vs_ipairs_vs_for.lua)
 
 
 
+# player.GetAll() pairs vs ipairs vs for vs Iterator
+
+TL;DR: The fastest is the Iterator, but I (and the wiki) would not recommend using it as it is error prone. Using ipairs is a very readable, easy to use and fast way to iterate over all players.
+
+The result:
+
+    pairs 	2.7375729999562e-06
+    ipairs	2.5955539999833e-06
+    for #t	2.5866950000025e-06
+    iter 	1.7860300003008e-07
+
+Code: [files/player_getall_compare.lua](files/player_getall_compare.lua)
+
+
+
 # looping through string vs number tables
 
 TL;DR: Numbered and Sequential tables are always faster thanks to ipairs and for loops being able to speed up the loop. There is no difference between the string index length in terms of speed. Sequentially-numbered tables are faster than non-sequential number tables.
